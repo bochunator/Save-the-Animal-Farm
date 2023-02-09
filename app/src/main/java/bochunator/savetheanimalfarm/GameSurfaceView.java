@@ -2,7 +2,9 @@ package bochunator.savetheanimalfarm;
 
 import static android.graphics.ImageFormat.RGB_565;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.view.MotionEvent;
@@ -16,13 +18,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bochunator.savetheanimalfarm.gameobject.Enemy;
+import bochunator.savetheanimalfarm.gameobject.GameObjectRadius;
 import bochunator.savetheanimalfarm.gameobject.Player;
 
 public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callback{
     private GameThread gameThread;
     private Paint paintTextInfo;
+    private Paint paintGameOver;
     private Player player;
     private final List<Enemy> enemies;
+    private GameOver gameOver;
+    private int coins = 0;
 
     public GameSurfaceView(Context context) {
         super(context);
@@ -33,6 +39,11 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         paintTextInfo = new Paint();
         paintTextInfo.setColor(ContextCompat.getColor(getContext(), R.color.teal_200));
         paintTextInfo.setTextSize(50);
+
+        paintGameOver = new Paint();
+        paintGameOver.setColor(ContextCompat.getColor(getContext(), R.color.purple_700));
+        paintGameOver.setTextSize(getWidth()/3);
+        paintGameOver.setTextAlign(Paint.Align.CENTER);
 
         enemies = new ArrayList<>();
     }
@@ -47,6 +58,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     @Override
     public void surfaceChanged(@NonNull SurfaceHolder surfaceHolder, int i, int i1, int i2) {
         player = new Player(getContext(), getWidth(), getHeight());
+        gameOver = new GameOver(3, getContext(), getWidth(), getHeight());
     }
 
     @Override
@@ -73,6 +85,10 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         }
 
         drawTextInfo(canvas);
+        if (gameOver.isGameOver()){
+            gameOver.drawGameOver(canvas);
+        }
+
     }
 
     public void drawTextInfo(Canvas canvas){
@@ -80,6 +96,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         canvas.drawText("UPS: " + averageUPS, 100, 100, paintTextInfo);
         String averageFPS = Double.toString(gameThread.getAverageFPS());
         canvas.drawText("FPS: " + averageFPS, 100, 200, paintTextInfo);
+        canvas.drawText("HEALTH POINTS: " + gameOver.getHealthPoints(), 100, 300, paintTextInfo);
     }
 
     @Override
@@ -87,13 +104,21 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
             case MotionEvent.ACTION_MOVE:{
-                player.setPositionX(event.getX());
-            }return true;
+                if (!gameOver.isGameOver()) {
+                    player.setPositionX(event.getX());
+                }else{
+                    gameOver.checkPosition(event.getX(), event.getY());
+                }
+            }
+            return true;
         }
         return super.onTouchEvent(event);
     }
 
     public void update() {
+        if(gameOver.isGameOver()){
+            return;
+        }
         if(Enemy.readyToSpawn()){
             enemies.add(new Enemy(getContext(), getWidth(), getHeight()));
         }
@@ -101,7 +126,11 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         for(Enemy e : enemies){
             e.update();
         }
-
-        enemies.removeIf(Enemy::readyToRemove);
+        if(enemies.removeIf(e -> GameObjectRadius.isColliding(e, player))){
+            gameOver.decrementHealthPoints();
+        }
+        if(enemies.removeIf(Enemy::readyToRemove)){
+            coins += 10;
+        }
     }
 }

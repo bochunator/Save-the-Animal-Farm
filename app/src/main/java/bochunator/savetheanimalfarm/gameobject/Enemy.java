@@ -10,7 +10,7 @@ import bochunator.savetheanimalfarm.R;
 
 public class Enemy extends GameObjectRadius{
     private static int updatesUntilNextSpawn = 0;
-    protected double velocityVertical;
+    private double velocityVertical;
 
     public Enemy(Context context, double deviceWidth, double deviceHeight) {
         super(
