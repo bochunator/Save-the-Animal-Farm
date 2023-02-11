@@ -2,9 +2,14 @@ package bochunator.savetheanimalfarm;
 
 import static android.graphics.ImageFormat.RGB_565;
 
+import static bochunator.savetheanimalfarm.MainActivity.ANIMAL;
+import static bochunator.savetheanimalfarm.MainActivity.HIGHEST_POINTS;
+import static bochunator.savetheanimalfarm.MainActivity.SHARED_PREFERENCES;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -33,8 +38,8 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     private final List<Enemy> enemies;
     private Bitmap background;
     private GameOver gameOver;
-    private int coins = 0;
     float randPosition = 0;
+    private SharedPreferences sharedPreferences;
     Bitmap playerBitmap;
     public GameSurfaceView(Context context) {
         super(context);
@@ -52,6 +57,8 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         paintGameOver.setTextAlign(Paint.Align.CENTER);
 
         enemies = new ArrayList<>();
+
+        sharedPreferences = context.getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
     }
 
     @Override
@@ -62,7 +69,10 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
             randPosition = (float) (Math.random() * (getWidth() - background.getWidth()));
         }
         CreatorBitmapAnimals creatorBitmapAnimals = new CreatorBitmapAnimals();
-        playerBitmap = creatorBitmapAnimals.getCreatorBitmapAnimals(3, getContext(), 1, 1);
+        playerBitmap = creatorBitmapAnimals.getCreatorBitmapAnimals(sharedPreferences.getInt(ANIMAL, 16), getContext(), 1, 1);
+        player = new Player(getContext(), getWidth(), getHeight());
+        gameOver = new GameOver(3, getContext(), getWidth(), getHeight(), sharedPreferences);
+
         gameThread = new GameThread(this, surfaceHolder);
         gameThread.setRunning(true);
         gameThread.start();
@@ -70,12 +80,12 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 
     @Override
     public void surfaceChanged(@NonNull SurfaceHolder surfaceHolder, int i, int i1, int i2) {
-        player = new Player(getContext(), getWidth(), getHeight());
-        gameOver = new GameOver(3, getContext(), getWidth(), getHeight());
     }
 
     @Override
     public void surfaceDestroyed(@NonNull SurfaceHolder surfaceHolder) {
+        gameOver.saveCoins();
+
         gameThread.setRunning(false);
         boolean retry = true;
         while (retry){
@@ -93,8 +103,6 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         super.draw(canvas);
         canvas.drawBitmap(background, randPosition, 0, null);
         canvas.drawBitmap(playerBitmap, 0, 0, null);
-        paintTextInfo.setColor(ContextCompat.getColor(getContext(), R.color.white));
-        canvas.drawText("Size: " + background.getWidth() + "x" + background.getHeight(), 100, 400, paintTextInfo);
 
         player.draw(canvas);
         for(Enemy e : enemies){
@@ -114,17 +122,21 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         String averageFPS = Double.toString(gameThread.getAverageFPS());
         canvas.drawText("FPS: " + averageFPS, 100, 200, paintTextInfo);
         canvas.drawText("HEALTH POINTS: " + gameOver.getHealthPoints(), 100, 300, paintTextInfo);
+        canvas.drawText("COINS: " + gameOver.getCoins(), 100, 400, paintTextInfo);
+        canvas.drawText("RECORD: " + gameOver.getHighestCoins(), 100, 500, paintTextInfo);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()){
-            case MotionEvent.ACTION_DOWN:
+            case MotionEvent.ACTION_DOWN:{
+                if(gameOver.isGameOver()){
+                    gameOver.checkPosition(event.getX(), event.getY());
+                }
+            }
             case MotionEvent.ACTION_MOVE:{
                 if (!gameOver.isGameOver()) {
                     player.setPositionX(event.getX());
-                }else{
-                    gameOver.checkPosition(event.getX(), event.getY());
                 }
             }
             return true;
@@ -134,6 +146,10 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 
     public void update() {
         if(gameOver.isGameOver()){
+            if(!enemies.isEmpty()){
+                gameOver.saveCoins();
+                enemies.clear();
+            }
             return;
         }
         if(Enemy.readyToSpawn()){
@@ -147,7 +163,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
             gameOver.decrementHealthPoints();
         }
         if(enemies.removeIf(Enemy::readyToRemove)){
-            coins += 10;
+            gameOver.setCoins(gameOver.getCoins() + 10);
         }
     }
 }
