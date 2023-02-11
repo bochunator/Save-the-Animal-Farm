@@ -5,6 +5,8 @@ import static android.graphics.ImageFormat.RGB_565;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.view.MotionEvent;
@@ -17,6 +19,8 @@ import androidx.core.content.ContextCompat;
 import java.util.ArrayList;
 import java.util.List;
 
+import bochunator.savetheanimalfarm.bitmap.CreatorBitmapAnimals;
+import bochunator.savetheanimalfarm.bitmap.CreatorBitmapBackground;
 import bochunator.savetheanimalfarm.gameobject.Enemy;
 import bochunator.savetheanimalfarm.gameobject.GameObjectRadius;
 import bochunator.savetheanimalfarm.gameobject.Player;
@@ -27,9 +31,11 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     private Paint paintGameOver;
     private Player player;
     private final List<Enemy> enemies;
+    private Bitmap background;
     private GameOver gameOver;
     private int coins = 0;
-
+    float randPosition = 0;
+    Bitmap playerBitmap;
     public GameSurfaceView(Context context) {
         super(context);
         setFocusable(true);
@@ -50,6 +56,13 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 
     @Override
     public void surfaceCreated(@NonNull SurfaceHolder surfaceHolder) {
+        CreatorBitmapBackground creatorBitmapBackground = new CreatorBitmapBackground();
+        background = creatorBitmapBackground.getCreatorRandomBitmapBackground(getContext(), getHeight());
+        if(getWidth() < background.getWidth()){
+            randPosition = (float) (Math.random() * (getWidth() - background.getWidth()));
+        }
+        CreatorBitmapAnimals creatorBitmapAnimals = new CreatorBitmapAnimals();
+        playerBitmap = creatorBitmapAnimals.getCreatorBitmapAnimals(3, getContext(), 1, 1);
         gameThread = new GameThread(this, surfaceHolder);
         gameThread.setRunning(true);
         gameThread.start();
@@ -78,6 +91,10 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
+        canvas.drawBitmap(background, randPosition, 0, null);
+        canvas.drawBitmap(playerBitmap, 0, 0, null);
+        paintTextInfo.setColor(ContextCompat.getColor(getContext(), R.color.white));
+        canvas.drawText("Size: " + background.getWidth() + "x" + background.getHeight(), 100, 400, paintTextInfo);
 
         player.draw(canvas);
         for(Enemy e : enemies){
