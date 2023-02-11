@@ -6,13 +6,12 @@ import androidx.core.content.ContextCompat;
 
 import bochunator.savetheanimalfarm.R;
 
-public class Player extends GameObjectRadius{
-
-    public Player(Context context, int deviceWidth, int deviceHeight) {
-        super(deviceWidth/2, deviceHeight*6/7 - deviceWidth/14, deviceWidth, deviceHeight, deviceWidth/14, ContextCompat.getColor(context, R.color.player));
+public class Player extends GameObjectRectangle{
+    public Player(Context context, double deviceWidth, double deviceHeight) {
+        super(deviceWidth/2, deviceHeight*6/7 - deviceWidth*1.618/14, deviceWidth, deviceHeight, deviceWidth/7, deviceWidth*1.618/7, ContextCompat.getColor(context, R.color.player));
     }
 
     public void setPositionX(double positionX) {
-        this.positionX = positionX < radius ? radius : Math.min(positionX, boardWidth - radius);
+        this.positionX = positionX < width/2 ? width/2 : Math.min(positionX, boardWidth - width/2);
     }
 }

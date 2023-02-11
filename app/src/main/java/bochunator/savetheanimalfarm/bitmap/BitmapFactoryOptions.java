@@ -8,6 +8,7 @@ public abstract class BitmapFactoryOptions {
 
     public BitmapFactoryOptions() {
         bitmapFactoryOptions = new BitmapFactory.Options();
-        bitmapFactoryOptions.inPreferredConfig = Bitmap.Config.RGB_565;
+        bitmapFactoryOptions.inPreferredConfig = Bitmap.Config.RGB_565; // Transparency is in ARGB_8888, RGB_565 is lighter version without transparency
+        bitmapFactoryOptions.inScaled = false; // Default is true, and then bitmap width and high are gained by device density
     }
 }

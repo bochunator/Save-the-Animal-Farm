@@ -3,17 +3,14 @@ package bochunator.savetheanimalfarm;
 import static android.graphics.ImageFormat.RGB_565;
 
 import static bochunator.savetheanimalfarm.MainActivity.ANIMAL;
-import static bochunator.savetheanimalfarm.MainActivity.HIGHEST_POINTS;
 import static bochunator.savetheanimalfarm.MainActivity.SHARED_PREFERENCES;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -24,10 +21,11 @@ import androidx.core.content.ContextCompat;
 import java.util.ArrayList;
 import java.util.List;
 
+import bochunator.savetheanimalfarm.gameobject.AdvancedCalculations;
 import bochunator.savetheanimalfarm.bitmap.CreatorBitmapAnimals;
 import bochunator.savetheanimalfarm.bitmap.CreatorBitmapBackground;
 import bochunator.savetheanimalfarm.gameobject.Enemy;
-import bochunator.savetheanimalfarm.gameobject.GameObjectRadius;
+import bochunator.savetheanimalfarm.gameobject.GameObject;
 import bochunator.savetheanimalfarm.gameobject.Player;
 
 public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callback{
@@ -159,7 +157,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         for(Enemy e : enemies){
             e.update();
         }
-        if(enemies.removeIf(e -> GameObjectRadius.isColliding(e, player))){
+        if(enemies.removeIf(e -> AdvancedCalculations.isCollidingCircleAndRectangle(e, player))){
             gameOver.decrementHealthPoints();
         }
         if(enemies.removeIf(Enemy::readyToRemove)){
