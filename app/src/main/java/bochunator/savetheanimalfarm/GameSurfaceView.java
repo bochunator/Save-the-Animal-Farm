@@ -21,10 +21,12 @@ import androidx.core.content.ContextCompat;
 import java.util.ArrayList;
 import java.util.List;
 
+import bochunator.savetheanimalfarm.bitmap.CreatorBitmapPlanets;
 import bochunator.savetheanimalfarm.gameobject.AdvancedCalculations;
 import bochunator.savetheanimalfarm.bitmap.CreatorBitmapAnimals;
 import bochunator.savetheanimalfarm.bitmap.CreatorBitmapBackground;
 import bochunator.savetheanimalfarm.gameobject.Enemy;
+import bochunator.savetheanimalfarm.gameobject.Explosion;
 import bochunator.savetheanimalfarm.gameobject.GameObject;
 import bochunator.savetheanimalfarm.gameobject.Player;
 
@@ -33,7 +35,12 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     private Paint paintTextInfo;
     private Paint paintGameOver;
     private Player player;
+
     private final List<Enemy> enemies;
+    private CreatorBitmapPlanets creatorBitmapPlanets;
+
+
+    private final List<Explosion> explosions;
     private Bitmap background;
     private GameOver gameOver;
     float randPosition = 0;
@@ -55,6 +62,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         paintGameOver.setTextAlign(Paint.Align.CENTER);
 
         enemies = new ArrayList<>();
+        explosions = new ArrayList<>();
 
         sharedPreferences = context.getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
     }
@@ -70,6 +78,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         playerBitmap = creatorBitmapAnimals.getCreatorBitmapAnimals(sharedPreferences.getInt(ANIMAL, 16), getContext(), 1, 1);
         player = new Player(getContext(), getWidth(), getHeight());
         gameOver = new GameOver(3, getContext(), getWidth(), getHeight(), sharedPreferences);
+        creatorBitmapPlanets = new CreatorBitmapPlanets(getContext(), getWidth());
 
         gameThread = new GameThread(this, surfaceHolder);
         gameThread.setRunning(true);
@@ -106,6 +115,9 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         for(Enemy e : enemies){
             e.draw(canvas);
         }
+        //for (Explosion e : explosions){
+        //    e.draw(canvas);
+        //}
 
         drawTextInfo(canvas);
         if (gameOver.isGameOver()){
@@ -151,17 +163,20 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
             return;
         }
         if(Enemy.readyToSpawn()){
-            enemies.add(new Enemy(getContext(), getWidth(), getHeight()));
+            enemies.add(new Enemy(getContext(), getWidth(), getHeight(), creatorBitmapPlanets.getCreatorRandomBitmapPlanets()));
         }
 
-        for(Enemy e : enemies){
-            e.update();
-        }
-        if(enemies.removeIf(e -> AdvancedCalculations.isCollidingCircleAndRectangle(e, player))){
-            gameOver.decrementHealthPoints();
+        for(int i = 0; i < enemies.size(); i++){
+            enemies.get(i).update();
+            if(AdvancedCalculations.isCollidingCircleAndRectangle(enemies.get(i), player)){
+                //explosions.add(new Explosion(getContext(), getWidth(), enemies.get(i).getPositionX(), enemies.get(i).getPositionY()));
+                enemies.remove(i);
+                gameOver.decrementHealthPoints();
+            }
         }
         if(enemies.removeIf(Enemy::readyToRemove)){
             gameOver.setCoins(gameOver.getCoins() + 10);
+            //explosions.add();
         }
     }
 }

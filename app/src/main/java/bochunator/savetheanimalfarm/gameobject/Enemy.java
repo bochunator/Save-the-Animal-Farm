@@ -1,18 +1,22 @@
 package bochunator.savetheanimalfarm.gameobject;
 
 import static bochunator.savetheanimalfarm.GameThread.MAX_UPS;
+import static bochunator.savetheanimalfarm.bitmap.CreatorBitmapPlanets.ZOOM;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 
 import androidx.core.content.ContextCompat;
 
 import bochunator.savetheanimalfarm.R;
 
 public class Enemy extends GameObjectRadius{
+    private Bitmap bitmap;
     private static int updatesUntilNextSpawn = 0;
     private double velocityVertical;
 
-    public Enemy(Context context, double deviceWidth, double deviceHeight) {
+    public Enemy(Context context, double deviceWidth, double deviceHeight, Bitmap bitmap) {
         super(
                 Math.random()*(deviceWidth - 2 * deviceWidth/12)+deviceWidth/12,
                 -deviceWidth/12,
@@ -21,6 +25,7 @@ public class Enemy extends GameObjectRadius{
                 deviceWidth/12,
                 ContextCompat.getColor(context, R.color.enemy)
         );
+        this.bitmap = bitmap;
         double SECONDS_TO_REACH_GROUND = 3;
         velocityVertical = deviceHeight / (MAX_UPS * SECONDS_TO_REACH_GROUND);
         updatesUntilNextSpawn = (int) (Math.random()*MAX_UPS);
@@ -32,6 +37,10 @@ public class Enemy extends GameObjectRadius{
         }
         updatesUntilNextSpawn--;
         return false;
+    }
+
+    public void draw(Canvas canvas){
+        canvas.drawBitmap(bitmap, (float) (positionX - radius * ZOOM), (float) (positionY - radius * ZOOM), null);
     }
 
     public void update() {
