@@ -10,11 +10,14 @@ import android.graphics.Canvas;
 import androidx.core.content.ContextCompat;
 
 import bochunator.savetheanimalfarm.R;
+import bochunator.savetheanimalfarm.bitmap.CreatorBitmapFloatingExplosions;
 
 public class Enemy extends GameObjectRadius{
     private Bitmap bitmap;
     private static int updatesUntilNextSpawn = 0;
     private double velocityVertical;
+
+    private int iteratorFloatingExplosion = 0;
 
     public Enemy(Context context, double deviceWidth, double deviceHeight, Bitmap bitmap) {
         super(
@@ -45,9 +48,17 @@ public class Enemy extends GameObjectRadius{
 
     public void update() {
         positionY += velocityVertical;
+        iteratorFloatingExplosion++;
+        if(CreatorBitmapFloatingExplosions.NUMBER_OF_FRAMES <= iteratorFloatingExplosion){
+            iteratorFloatingExplosion = 0;
+        }
     }
 
     public boolean readyToRemove() {
         return positionY > boardHeight - getRadius();
+    }
+
+    public int getIteratorFloatingExplosion() {
+        return iteratorFloatingExplosion;
     }
 }

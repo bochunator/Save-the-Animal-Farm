@@ -10,7 +10,6 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Point;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -21,13 +20,14 @@ import androidx.core.content.ContextCompat;
 import java.util.ArrayList;
 import java.util.List;
 
+import bochunator.savetheanimalfarm.bitmap.CreatorBitmapExplosions;
+import bochunator.savetheanimalfarm.bitmap.CreatorBitmapFloatingExplosions;
 import bochunator.savetheanimalfarm.bitmap.CreatorBitmapPlanets;
 import bochunator.savetheanimalfarm.gameobject.AdvancedCalculations;
 import bochunator.savetheanimalfarm.bitmap.CreatorBitmapAnimals;
 import bochunator.savetheanimalfarm.bitmap.CreatorBitmapBackground;
 import bochunator.savetheanimalfarm.gameobject.Enemy;
 import bochunator.savetheanimalfarm.gameobject.Explosion;
-import bochunator.savetheanimalfarm.gameobject.GameObject;
 import bochunator.savetheanimalfarm.gameobject.Player;
 
 public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callback{
@@ -38,7 +38,8 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 
     private final List<Enemy> enemies;
     private CreatorBitmapPlanets creatorBitmapPlanets;
-
+    private CreatorBitmapExplosions creatorBitmapExplosions;
+    private CreatorBitmapFloatingExplosions creatorBitmapFloatingExplosions;
 
     private final List<Explosion> explosions;
     private Bitmap background;
@@ -46,6 +47,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     float randPosition = 0;
     private SharedPreferences sharedPreferences;
     Bitmap playerBitmap;
+    private Paint platformPaint;
     public GameSurfaceView(Context context) {
         super(context);
         setFocusable(true);
@@ -60,6 +62,8 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         paintGameOver.setColor(ContextCompat.getColor(getContext(), R.color.purple_700));
         paintGameOver.setTextSize(getWidth()/3);
         paintGameOver.setTextAlign(Paint.Align.CENTER);
+        platformPaint = new Paint();
+        platformPaint.setColor(ContextCompat.getColor(getContext(), R.color.brown));
 
         enemies = new ArrayList<>();
         explosions = new ArrayList<>();
@@ -76,9 +80,12 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         }
         CreatorBitmapAnimals creatorBitmapAnimals = new CreatorBitmapAnimals();
         playerBitmap = creatorBitmapAnimals.getCreatorBitmapAnimals(sharedPreferences.getInt(ANIMAL, 16), getContext(), 1, 1);
+        playerBitmap = Bitmap.createScaledBitmap(playerBitmap, getWidth()/7, (int) (getWidth() / 7 * 1.618), true);
         player = new Player(getContext(), getWidth(), getHeight());
         gameOver = new GameOver(3, getContext(), getWidth(), getHeight(), sharedPreferences);
         creatorBitmapPlanets = new CreatorBitmapPlanets(getContext(), getWidth());
+        creatorBitmapExplosions = new CreatorBitmapExplosions(getContext(), getWidth());
+        creatorBitmapFloatingExplosions = new CreatorBitmapFloatingExplosions(getContext(), getWidth());
 
         gameThread = new GameThread(this, surfaceHolder);
         gameThread.setRunning(true);
@@ -109,15 +116,28 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     public void draw(Canvas canvas) {
         super.draw(canvas);
         canvas.drawBitmap(background, randPosition, 0, null);
-        canvas.drawBitmap(playerBitmap, 0, 0, null);
+        canvas.drawRect(0, (float) (6.0/7.0 * getHeight()),getWidth(),getHeight(), platformPaint);
 
-        player.draw(canvas);
+        //player.draw(canvas);
+        canvas.drawBitmap(playerBitmap, (float) (player.getPositionX()-player.getWidth()/2), (float) (player.getPositionY()-player.getHeight()/2), null);
+
         for(Enemy e : enemies){
+            canvas.drawBitmap(
+                    creatorBitmapFloatingExplosions.getFloatingExplosion(e.getIteratorFloatingExplosion()),
+                    (float) (e.getPositionX() - e.getRadius()),
+                    (float) e.getPositionY() - (int) (getWidth() * 1.618 /3),
+                    null
+            );
             e.draw(canvas);
         }
-        //for (Explosion e : explosions){
-        //    e.draw(canvas);
-        //}
+        for (Explosion e : explosions){
+            canvas.drawBitmap(
+                    e.isSmoke() ? creatorBitmapExplosions.getExplosionSmoke(e.iterator) : creatorBitmapExplosions.getExplosion(e.iterator),
+                    (float) e.getPositionX(),
+                    (float) e.getPositionY(),
+                    null
+            );
+        }
 
         drawTextInfo(canvas);
         if (gameOver.isGameOver()){
@@ -159,6 +179,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
             if(!enemies.isEmpty()){
                 gameOver.saveCoins();
                 enemies.clear();
+                player.setPositionX(getWidth()/2);
             }
             return;
         }
@@ -166,17 +187,25 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
             enemies.add(new Enemy(getContext(), getWidth(), getHeight(), creatorBitmapPlanets.getCreatorRandomBitmapPlanets()));
         }
 
+        for(int i = 0; i < explosions.size(); i++){
+            explosions.get(i).iterator++;
+            if(Explosion.NUMBER_OF_FRAMES <= explosions.get(i).iterator){
+                explosions.remove(i);
+            }
+        }
+
         for(int i = 0; i < enemies.size(); i++){
             enemies.get(i).update();
             if(AdvancedCalculations.isCollidingCircleAndRectangle(enemies.get(i), player)){
-                //explosions.add(new Explosion(getContext(), getWidth(), enemies.get(i).getPositionX(), enemies.get(i).getPositionY()));
+                explosions.add(new Explosion(getContext(), getWidth(), enemies.get(i).getPositionX(), enemies.get(i).getPositionY()));
                 enemies.remove(i);
                 gameOver.decrementHealthPoints();
             }
-        }
-        if(enemies.removeIf(Enemy::readyToRemove)){
-            gameOver.setCoins(gameOver.getCoins() + 10);
-            //explosions.add();
+            if(enemies.get(i).readyToRemove()){
+                gameOver.setCoins(gameOver.getCoins() + 10);
+                explosions.add(new Explosion(getContext(), getWidth(), enemies.get(i).getPositionX(), enemies.get(i).getPositionY()));
+                enemies.remove(i);
+            }
         }
     }
 }
