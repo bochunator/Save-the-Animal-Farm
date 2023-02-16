@@ -3,12 +3,12 @@ package bochunator.savetheanimalfarm;
 import static android.graphics.ImageFormat.RGB_565;
 
 import static bochunator.savetheanimalfarm.MainActivity.ANIMAL;
+import static bochunator.savetheanimalfarm.MainActivity.DEFAULT_ANIMAL;
 import static bochunator.savetheanimalfarm.MainActivity.SHARED_PREFERENCES;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.view.MotionEvent;
@@ -25,31 +25,27 @@ import bochunator.savetheanimalfarm.bitmap.CreatorBitmapExplosions;
 import bochunator.savetheanimalfarm.bitmap.CreatorBitmapFloatingExplosions;
 import bochunator.savetheanimalfarm.bitmap.CreatorBitmapPlanets;
 import bochunator.savetheanimalfarm.gameobject.AdvancedCalculations;
-import bochunator.savetheanimalfarm.bitmap.CreatorBitmapAnimals;
-import bochunator.savetheanimalfarm.bitmap.CreatorBitmapBackground;
+import bochunator.savetheanimalfarm.gameobject.Background;
 import bochunator.savetheanimalfarm.gameobject.Enemy;
 import bochunator.savetheanimalfarm.gameobject.Explosion;
+import bochunator.savetheanimalfarm.gameobject.Ground;
 import bochunator.savetheanimalfarm.gameobject.Player;
 
 public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callback{
     private GameThread gameThread;
-    private Paint paintTextInfo;
-    private Paint paintGameOver;
+    private Background background;
+    private Ground ground;
     private Player player;
-
     private final List<Enemy> enemies;
-    private CreatorBitmapPlanets creatorBitmapPlanets;
-    private CreatorBitmapExplosions creatorBitmapExplosions;
-    private CreatorBitmapFloatingExplosions creatorBitmapFloatingExplosions;
-
     private final List<Explosion> explosions;
-    private Bitmap background;
-    private Bitmap platform;
-    private GameOver gameOver;
-    float randPosition = 0;
-    private SharedPreferences sharedPreferences;
-    Bitmap playerBitmap;
-    private Paint platformPaint;
+    private final SharedPreferences sharedPreferences;
+    private CreatorBitmapPlanets creatorBitmapPlanets;
+    private CreatorBitmapFloatingExplosions creatorBitmapFloatingExplosions;
+    private CreatorBitmapExplosions creatorBitmapExplosions;
+
+    private Paint paintTextInfo; //TODO:
+    private Paint paintGameOver; //TODO:
+    private GameOver gameOver; //TODO:
 
     public GameSurfaceView(Context context) {
         super(context);
@@ -57,16 +53,14 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         getHolder().setFormat(RGB_565);
         getHolder().addCallback(this);
 
-        paintTextInfo = new Paint();
-        paintTextInfo.setColor(ContextCompat.getColor(getContext(), R.color.teal_200));
-        paintTextInfo.setTextSize(50);
+        paintTextInfo = new Paint(); //TODO:
+        paintTextInfo.setColor(ContextCompat.getColor(getContext(), R.color.teal_200)); //TODO:
+        paintTextInfo.setTextSize(50); //TODO:
 
         paintGameOver = new Paint();
         paintGameOver.setColor(ContextCompat.getColor(getContext(), R.color.purple_700));
         paintGameOver.setTextSize(getWidth()/3);
         paintGameOver.setTextAlign(Paint.Align.CENTER);
-        platformPaint = new Paint();
-        platformPaint.setColor(ContextCompat.getColor(getContext(), R.color.brown));
 
         enemies = new ArrayList<>();
         explosions = new ArrayList<>();
@@ -76,32 +70,14 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 
     @Override
     public void surfaceCreated(@NonNull SurfaceHolder surfaceHolder) {
-        CreatorBitmapBackground creatorBitmapBackground = new CreatorBitmapBackground();
-        background = creatorBitmapBackground.getCreatorRandomBitmapBackground(getContext(), getHeight());
-        if(getWidth() < background.getWidth()){
-            randPosition = (float) (Math.random() * (getWidth() - background.getWidth()));
-        }
-        platform = Bitmap.createScaledBitmap(
-                BitmapFactory.decodeResource(getContext().getResources(), R.drawable.ground_grass_small_broken),
-                getWidth(),
-                getHeight()/7,
-                false
-        );
-        CreatorBitmapAnimals creatorBitmapAnimals = new CreatorBitmapAnimals();
-        playerBitmap = creatorBitmapAnimals.getCreatorBitmapAnimals(sharedPreferences.getInt(ANIMAL, 16), getContext());
-        double scaleWidth =  (double) getWidth() / (7 * 136);
-        double scaleHeight =  (double) getWidth() / (7 * 136);
-        playerBitmap = Bitmap.createScaledBitmap(playerBitmap,
-                (int) (getWidth() / 7 * (double)playerBitmap.getWidth() / 136),
-                (int) (getWidth()  / 7 * (double)playerBitmap.getHeight() / 136),
-                true);
-        player = new Player(getContext(), getWidth(), getHeight(), playerBitmap,
-                (int) (creatorBitmapAnimals.offsetWidth(sharedPreferences.getInt(ANIMAL, 16)) * scaleWidth),
-                (int) (creatorBitmapAnimals.offsetHeight(sharedPreferences.getInt(ANIMAL, 16)) * scaleHeight));
-        gameOver = new GameOver(3, getContext(), getWidth(), getHeight(), sharedPreferences);
+        background = new Background(getContext(), getWidth(), getHeight());
+        ground = new Ground(getContext(), getWidth(), getHeight());
         creatorBitmapPlanets = new CreatorBitmapPlanets(getContext(), getWidth());
+        creatorBitmapFloatingExplosions  = new CreatorBitmapFloatingExplosions(getContext(), getWidth());
         creatorBitmapExplosions = new CreatorBitmapExplosions(getContext(), getWidth());
-        creatorBitmapFloatingExplosions = new CreatorBitmapFloatingExplosions(getContext(), getWidth());
+        player = new Player(getContext(), getWidth(), getHeight(), sharedPreferences.getInt(ANIMAL, DEFAULT_ANIMAL));
+
+        gameOver = new GameOver(3, getContext(), getWidth(), getHeight(), sharedPreferences);//TODO:
 
         gameThread = new GameThread(this, surfaceHolder);
         gameThread.setRunning(true);
@@ -114,7 +90,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 
     @Override
     public void surfaceDestroyed(@NonNull SurfaceHolder surfaceHolder) {
-        gameOver.saveCoins();
+        gameOver.saveCoins();//TODO:
 
         gameThread.setRunning(false);
         boolean retry = true;
@@ -131,32 +107,19 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        canvas.drawBitmap(background, randPosition, 0, null);
-        canvas.drawRect(0, (float) (6.0/7.0 * getHeight()),getWidth(),getHeight(), platformPaint);
-        canvas.drawBitmap(platform,0, (float) (6.0/7.0 * getHeight()), null);
-
+        background.draw(canvas);
+        ground.draw(canvas);
         player.draw(canvas);
 
         for(Enemy e : enemies){
-            canvas.drawBitmap(
-                    creatorBitmapFloatingExplosions.getFloatingExplosion(e.getIteratorFloatingExplosion()),
-                    (float) (e.getX() - e.getRadius()),
-                    (float) e.getY() - (int) (getWidth() * 1.618 /3),
-                    null
-            );
             e.draw(canvas);
         }
         for (Explosion e : explosions){
-            canvas.drawBitmap(
-                    e.isSmoke() ? creatorBitmapExplosions.getExplosionSmoke(e.iterator) : creatorBitmapExplosions.getExplosion(e.iterator),
-                    (float) e.getX(),
-                    (float) e.getY(),
-                    null
-            );
+            e.draw(canvas);
         }
 
-        drawTextInfo(canvas);
-        if (gameOver.isGameOver()){
+        drawTextInfo(canvas);//TODO:
+        if (gameOver.isGameOver()){//TODO:
             gameOver.drawGameOver(canvas);
         }
 
@@ -200,12 +163,12 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
             return;
         }
         if(Enemy.readyToSpawn()){
-            enemies.add(new Enemy(getContext(), getWidth(), getHeight(), creatorBitmapPlanets.getCreatorRandomBitmapPlanets()));
+            enemies.add(new Enemy(getContext(), getWidth(), getHeight(), creatorBitmapPlanets.getCreatorRandomBitmapPlanets(), creatorBitmapFloatingExplosions.getFloatingExplosionBitmap()));
         }
 
         for(int i = 0; i < explosions.size(); i++){
-            explosions.get(i).iterator++;
-            if(Explosion.NUMBER_OF_FRAMES <= explosions.get(i).iterator){
+            explosions.get(i).update();
+            if(explosions.get(i).readyToRemove()){
                 explosions.remove(i);
             }
         }
@@ -213,13 +176,13 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         for(int i = 0; i < enemies.size(); i++){
             enemies.get(i).update();
             if(AdvancedCalculations.isCollidingCircleAndRectangle(enemies.get(i), player)){
-                explosions.add(new Explosion(getContext(), getWidth(), enemies.get(i).getX(), enemies.get(i).getY()));
+                explosions.add(new Explosion(getWidth(), enemies.get(i).getPositionX(), enemies.get(i).getPositionY(), creatorBitmapExplosions.getRandomBitmaps()));
                 enemies.remove(i);
                 gameOver.decrementHealthPoints();
             }
             if(enemies.get(i).readyToRemove()){
                 gameOver.setCoins(gameOver.getCoins() + 10);
-                explosions.add(new Explosion(getContext(), getWidth(), enemies.get(i).getX(), enemies.get(i).getY()));
+                explosions.add(new Explosion(getWidth(), enemies.get(i).getPositionX(), enemies.get(i).getPositionY(), creatorBitmapExplosions.getRandomBitmaps()));
                 enemies.remove(i);
             }
         }

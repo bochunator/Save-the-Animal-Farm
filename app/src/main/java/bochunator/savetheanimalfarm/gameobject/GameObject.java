@@ -1,12 +1,14 @@
 package bochunator.savetheanimalfarm.gameobject;
 
 public class GameObject extends Coordinate {
-    protected double boardWidth;
+    protected double deviceWidth;
+    protected double deviceHeight;
     protected double boardHeight;
 
     public GameObject(double positionX, double positionY, double deviceWidth, double deviceHeight) {
         super(positionX, positionY);
-        boardWidth = deviceWidth;
+        this.deviceHeight = deviceHeight;
+        this.deviceWidth = deviceWidth;
         boardHeight = deviceHeight*6/7;
     }
 }

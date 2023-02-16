@@ -1,26 +1,26 @@
 package bochunator.savetheanimalfarm.gameobject;
 
 public class Coordinate {
-    protected double x;
-    protected double y;
+    protected double positionX;
+    protected double positionY;
 
-    public Coordinate(double x, double y) {
-        this.x = x;
-        this.y = y;
+    public Coordinate(double positionX, double positionY) {
+        this.positionX = positionX;
+        this.positionY = positionY;
     }
 
     public static double calculateDistanceBetweenCoordinates(Coordinate firstCoordinate, Coordinate secondCoordinate){
         return Math.sqrt(
-                Math.pow(secondCoordinate.x - firstCoordinate.x, 2) +
-                        Math.pow(secondCoordinate.y - firstCoordinate.y, 2)
+                Math.pow(secondCoordinate.positionX - firstCoordinate.positionX, 2) +
+                        Math.pow(secondCoordinate.positionY - firstCoordinate.positionY, 2)
         );
     }
 
-    public double getX() {
-        return x;
+    public double getPositionX() {
+        return positionX;
     }
 
-    public double getY() {
-        return y;
+    public double getPositionY() {
+        return positionY;
     }
 }

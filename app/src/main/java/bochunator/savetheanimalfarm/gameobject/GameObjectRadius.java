@@ -14,14 +14,8 @@ public class GameObjectRadius extends GameObject {
         paint.setColor(color);
     }
 
-    public static boolean isColliding(GameObjectRadius firstGameObjectRadius, GameObjectRadius secondGameObjectRadius){
-        double distanceBetweenObjects = calculateDistanceBetweenCoordinates(firstGameObjectRadius, secondGameObjectRadius);
-        double distanceToCollision = firstGameObjectRadius.getRadius() + secondGameObjectRadius.getRadius();
-        return distanceBetweenObjects < distanceToCollision;
-    }
-
     public void draw(Canvas canvas){
-        canvas.drawCircle((float) x, (float) y, (float)radius, paint);
+        canvas.drawCircle((float) positionX, (float) positionY, (float)radius, paint);
     }
 
     public double getRadius() {

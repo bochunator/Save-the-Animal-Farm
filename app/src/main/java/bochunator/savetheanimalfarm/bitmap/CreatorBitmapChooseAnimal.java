@@ -10,11 +10,9 @@ public class CreatorBitmapChooseAnimal{
     private static final int NUMBER_OF_ROWS = 6;
     private static final int NUMBER_OF_COLUMNS = 5;
 
-    Bitmap squareNoDetailsOutlineBitmap;
-    Context context;
+    private final Bitmap squareNoDetailsOutlineBitmap;
 
     public CreatorBitmapChooseAnimal(Context context) {
-        this.context = context;
         this.squareNoDetailsOutlineBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.square_no_details_outline);
     }
 

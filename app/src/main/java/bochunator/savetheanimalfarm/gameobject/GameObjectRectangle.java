@@ -18,7 +18,7 @@ public class GameObjectRectangle extends GameObject{
     }
 
     public void draw(Canvas canvas){
-        canvas.drawRect((float) (x - width/2), (float) (y - height/2), (float) (x + width/2), (float) (y + height/2), paint);
+        canvas.drawRect((float) (positionX - width/2), (float) (positionY - height/2), (float) (positionX + width/2), (float) (positionY + height/2), paint);
     }
 
     public double getWidth() {

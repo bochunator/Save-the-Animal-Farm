@@ -21,8 +21,8 @@ public class CreatorBitmapPlanets extends BitmapFactoryOptions{
     private final Bitmap planet09Bitmap;
     public final static double ZOOM = 1280.0 / (1280.0 - 2.0 * 127.0);
 
-    private Context context;
-    private int deviceWidth;
+    private final Context context;
+    private final int deviceWidth;
 
     public CreatorBitmapPlanets(Context context, int deviceWidth) {
         this.context = context;
