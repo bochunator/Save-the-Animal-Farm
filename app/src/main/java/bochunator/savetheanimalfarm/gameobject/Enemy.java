@@ -43,11 +43,11 @@ public class Enemy extends GameObjectRadius{
     }
 
     public void draw(Canvas canvas){
-        canvas.drawBitmap(bitmap, (float) (positionX - radius * ZOOM), (float) (positionY - radius * ZOOM), null);
+        canvas.drawBitmap(bitmap, (float) (x - radius * ZOOM), (float) (y - radius * ZOOM), null);
     }
 
     public void update() {
-        positionY += velocityVertical;
+        y += velocityVertical;
         iteratorFloatingExplosion++;
         if(CreatorBitmapFloatingExplosions.NUMBER_OF_FRAMES <= iteratorFloatingExplosion){
             iteratorFloatingExplosion = 0;
@@ -55,7 +55,7 @@ public class Enemy extends GameObjectRadius{
     }
 
     public boolean readyToRemove() {
-        return positionY > boardHeight - getRadius();
+        return y > boardHeight - getRadius();
     }
 
     public int getIteratorFloatingExplosion() {

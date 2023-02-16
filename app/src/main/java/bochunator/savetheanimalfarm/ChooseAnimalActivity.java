@@ -4,6 +4,7 @@ import static bochunator.savetheanimalfarm.MainActivity.ANIMAL;
 import static bochunator.savetheanimalfarm.MainActivity.HIGHEST_POINTS;
 import static bochunator.savetheanimalfarm.MainActivity.SHARED_PREFERENCES;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -58,5 +59,17 @@ public class ChooseAnimalActivity extends AppCompatActivity {
             startActivity(new Intent(ChooseAnimalActivity.this, MainActivity.class));
             finish();
         });
+
+        // This callback will only be called when MyFragment is at least Started.
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                // Handle the back button event
+                startActivity(new Intent(ChooseAnimalActivity.this, MainActivity.class));
+                finish();
+            }
+        };
+        this.getOnBackPressedDispatcher().addCallback(this, callback);
+
     }
 }

@@ -8,6 +8,7 @@ import static bochunator.savetheanimalfarm.MainActivity.SHARED_PREFERENCES;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.view.MotionEvent;
@@ -43,11 +44,13 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 
     private final List<Explosion> explosions;
     private Bitmap background;
+    private Bitmap platform;
     private GameOver gameOver;
     float randPosition = 0;
     private SharedPreferences sharedPreferences;
     Bitmap playerBitmap;
     private Paint platformPaint;
+
     public GameSurfaceView(Context context) {
         super(context);
         setFocusable(true);
@@ -78,10 +81,23 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         if(getWidth() < background.getWidth()){
             randPosition = (float) (Math.random() * (getWidth() - background.getWidth()));
         }
+        platform = Bitmap.createScaledBitmap(
+                BitmapFactory.decodeResource(getContext().getResources(), R.drawable.ground_grass_small_broken),
+                getWidth(),
+                getHeight()/7,
+                false
+        );
         CreatorBitmapAnimals creatorBitmapAnimals = new CreatorBitmapAnimals();
-        playerBitmap = creatorBitmapAnimals.getCreatorBitmapAnimals(sharedPreferences.getInt(ANIMAL, 16), getContext(), 1, 1);
-        playerBitmap = Bitmap.createScaledBitmap(playerBitmap, getWidth()/7, (int) (getWidth() / 7 * 1.618), true);
-        player = new Player(getContext(), getWidth(), getHeight());
+        playerBitmap = creatorBitmapAnimals.getCreatorBitmapAnimals(sharedPreferences.getInt(ANIMAL, 16), getContext());
+        double scaleWidth =  (double) getWidth() / (7 * 136);
+        double scaleHeight =  (double) getWidth() / (7 * 136);
+        playerBitmap = Bitmap.createScaledBitmap(playerBitmap,
+                (int) (getWidth() / 7 * (double)playerBitmap.getWidth() / 136),
+                (int) (getWidth()  / 7 * (double)playerBitmap.getHeight() / 136),
+                true);
+        player = new Player(getContext(), getWidth(), getHeight(), playerBitmap,
+                (int) (creatorBitmapAnimals.offsetWidth(sharedPreferences.getInt(ANIMAL, 16)) * scaleWidth),
+                (int) (creatorBitmapAnimals.offsetHeight(sharedPreferences.getInt(ANIMAL, 16)) * scaleHeight));
         gameOver = new GameOver(3, getContext(), getWidth(), getHeight(), sharedPreferences);
         creatorBitmapPlanets = new CreatorBitmapPlanets(getContext(), getWidth());
         creatorBitmapExplosions = new CreatorBitmapExplosions(getContext(), getWidth());
@@ -117,15 +133,15 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         super.draw(canvas);
         canvas.drawBitmap(background, randPosition, 0, null);
         canvas.drawRect(0, (float) (6.0/7.0 * getHeight()),getWidth(),getHeight(), platformPaint);
+        canvas.drawBitmap(platform,0, (float) (6.0/7.0 * getHeight()), null);
 
-        //player.draw(canvas);
-        canvas.drawBitmap(playerBitmap, (float) (player.getPositionX()-player.getWidth()/2), (float) (player.getPositionY()-player.getHeight()/2), null);
+        player.draw(canvas);
 
         for(Enemy e : enemies){
             canvas.drawBitmap(
                     creatorBitmapFloatingExplosions.getFloatingExplosion(e.getIteratorFloatingExplosion()),
-                    (float) (e.getPositionX() - e.getRadius()),
-                    (float) e.getPositionY() - (int) (getWidth() * 1.618 /3),
+                    (float) (e.getX() - e.getRadius()),
+                    (float) e.getY() - (int) (getWidth() * 1.618 /3),
                     null
             );
             e.draw(canvas);
@@ -133,8 +149,8 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         for (Explosion e : explosions){
             canvas.drawBitmap(
                     e.isSmoke() ? creatorBitmapExplosions.getExplosionSmoke(e.iterator) : creatorBitmapExplosions.getExplosion(e.iterator),
-                    (float) e.getPositionX(),
-                    (float) e.getPositionY(),
+                    (float) e.getX(),
+                    (float) e.getY(),
                     null
             );
         }
@@ -197,13 +213,13 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         for(int i = 0; i < enemies.size(); i++){
             enemies.get(i).update();
             if(AdvancedCalculations.isCollidingCircleAndRectangle(enemies.get(i), player)){
-                explosions.add(new Explosion(getContext(), getWidth(), enemies.get(i).getPositionX(), enemies.get(i).getPositionY()));
+                explosions.add(new Explosion(getContext(), getWidth(), enemies.get(i).getX(), enemies.get(i).getY()));
                 enemies.remove(i);
                 gameOver.decrementHealthPoints();
             }
             if(enemies.get(i).readyToRemove()){
                 gameOver.setCoins(gameOver.getCoins() + 10);
-                explosions.add(new Explosion(getContext(), getWidth(), enemies.get(i).getPositionX(), enemies.get(i).getPositionY()));
+                explosions.add(new Explosion(getContext(), getWidth(), enemies.get(i).getX(), enemies.get(i).getY()));
                 enemies.remove(i);
             }
         }

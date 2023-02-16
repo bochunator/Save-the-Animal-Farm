@@ -7,7 +7,7 @@ import android.graphics.BitmapFactory;
 import bochunator.savetheanimalfarm.R;
 
 public class CreatorBitmapAnimals extends BitmapFactoryOptions{
-    public Bitmap getCreatorBitmapAnimals(int id, Context context, int width, int height){//TODO:
+    public Bitmap getCreatorBitmapAnimals(int id, Context context){
         Bitmap spriteSheetBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.animals_square_outline, bitmapFactoryOptions);
         switch (id){
             case 0: return Bitmap.createBitmap(spriteSheetBitmap, 782, 0, 136, 153);
@@ -21,7 +21,7 @@ public class CreatorBitmapAnimals extends BitmapFactoryOptions{
             case 8: return Bitmap.createBitmap(spriteSheetBitmap, 276, 0, 170, 169);
             case 9: return Bitmap.createBitmap(spriteSheetBitmap, 0, 170, 194, 136);
             case 10: return Bitmap.createBitmap(spriteSheetBitmap, 522, 714, 136, 142);
-            case 11: return Bitmap.createBitmap(spriteSheetBitmap, 366, 442, 155, 136);
+            case 11: return Bitmap.createBitmap(spriteSheetBitmap, 366, 442, 154, 136);
             case 12: return Bitmap.createBitmap(spriteSheetBitmap, 194, 170, 170, 136);
             case 13: return Bitmap.createBitmap(spriteSheetBitmap, 364, 169, 146, 136);
             case 14: return Bitmap.createBitmap(spriteSheetBitmap, 658, 607, 136, 153);
@@ -41,6 +41,78 @@ public class CreatorBitmapAnimals extends BitmapFactoryOptions{
             case 28: return Bitmap.createBitmap(spriteSheetBitmap, 646, 136, 136, 169);
             case 29: return Bitmap.createBitmap(spriteSheetBitmap, 186, 793, 182, 136);
             default: return null;
+        }
+    }
+
+    public int offsetWidth(int id){
+        switch (id) {
+            case 0: return 0;
+            case 1: return 0;
+            case 2: return 9;
+            case 3: return 28;
+            case 4: return 0;
+            case 5: return 10;
+            case 6: return 21;
+            case 7: return 70;
+            case 8: return 17;
+            case 9: return 29;
+            case 10: return 0;
+            case 11: return 10;
+            case 12: return 17;
+            case 13: return 5;
+            case 14: return 0;
+            case 15: return 0;
+            case 16: return 0;
+            case 17: return 0;
+            case 18: return 28;
+            case 19: return 0;
+            case 20: return 0;
+            case 21: return 25;
+            case 22: return 19;
+            case 23: return 0;
+            case 24: return 28;
+            case 25: return 18;
+            case 26: return 0;
+            case 27: return 0;
+            case 28: return 0;
+            case 29: return 23;
+            default: return 0;
+        }
+    }
+
+    public int offsetHeight(int id){
+        switch (id) {
+            case 0: return 17;
+            case 1: return 48;
+            case 2: return 11;
+            case 3: return 22;
+            case 4: return 0;
+            case 5: return 19;
+            case 6: return 0;
+            case 7: return 34;
+            case 8: return 33;
+            case 9: return 0;
+            case 10: return 0;
+            case 11: return 0;
+            case 12: return 0;
+            case 13: return 0;
+            case 14: return 17;
+            case 15: return 0;
+            case 16: return 0;
+            case 17: return 15;
+            case 18: return 10;
+            case 19: return 0;
+            case 20: return 0;
+            case 21: return 0;
+            case 22: return 0;
+            case 23: return 0;
+            case 24: return 11;
+            case 25: return 0;
+            case 26: return 0;
+            case 27: return 0;
+            case 28: return 33;
+            case 29: return 0;
+            default: return 0;
         }
     }
 }

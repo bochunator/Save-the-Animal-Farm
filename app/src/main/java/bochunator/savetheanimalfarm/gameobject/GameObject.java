@@ -1,6 +1,6 @@
 package bochunator.savetheanimalfarm.gameobject;
 
-public class GameObject extends Dot {
+public class GameObject extends Coordinate {
     protected double boardWidth;
     protected double boardHeight;
 

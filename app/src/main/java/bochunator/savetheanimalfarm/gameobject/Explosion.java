@@ -1,10 +1,8 @@
 package bochunator.savetheanimalfarm.gameobject;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
 
-public class Explosion extends Dot{
+public class Explosion extends Coordinate {
     public static final int NUMBER_OF_FRAMES = 5;
     public int iterator;
     private boolean smoke;

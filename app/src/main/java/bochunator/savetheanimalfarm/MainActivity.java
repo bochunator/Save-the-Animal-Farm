@@ -26,11 +26,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        sharedPreferences = getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
-
         setContentView(R.layout.activity_main);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        sharedPreferences = getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
 
         Button btnStartGameActivity = (Button) findViewById(R.id.btnStartGameActivity);
         btnStartGameActivity.setOnClickListener(view -> {
@@ -41,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
         CreatorBitmapAnimals creatorBitmapAnimals = new CreatorBitmapAnimals();
 
-        imgViewStartChooseAnimalActivity.setImageBitmap(creatorBitmapAnimals.getCreatorBitmapAnimals(sharedPreferences.getInt(ANIMAL, 16), this, 1, 1));
+        imgViewStartChooseAnimalActivity.setImageBitmap(creatorBitmapAnimals.getCreatorBitmapAnimals(sharedPreferences.getInt(ANIMAL, 16), this));
         imgViewStartChooseAnimalActivity.setOnClickListener(view -> {
             startActivity(new Intent(MainActivity.this, ChooseAnimalActivity.class));
             finish();

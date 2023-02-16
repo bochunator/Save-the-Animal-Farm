@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChooseAnimalActivity">
+    tools:context=".ChooseAnimalActivity"
+    android:background="@color/bright_blue">
+
 
     <ImageView
         android:id="@+id/imageViewSquareNoDetailsOutline"
@@ -41,4 +43,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageViewSquareNoDetailsOutline"
         tools:srcCompat="@tools:sample/avatars" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
