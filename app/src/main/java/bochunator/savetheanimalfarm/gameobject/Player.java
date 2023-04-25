@@ -14,7 +14,7 @@ public class Player extends GameObjectRectangle{
     private final int offsetHeight;
     private final int offsetWidth;
 
-    public Player(Context context, double deviceWidth, double deviceHeight, int idAnimal){//, Bitmap playerBitmap, int offsetWidth, int offsetHeight) {
+    public Player(Context context, double deviceWidth, double deviceHeight, int idAnimal){
         super(deviceWidth/2, deviceHeight*6/7 - deviceWidth/14, deviceWidth, deviceHeight, deviceWidth/7, deviceWidth/7, ContextCompat.getColor(context, R.color.player));
 
         CreatorBitmapAnimals creatorBitmapAnimals = new CreatorBitmapAnimals();
@@ -38,5 +38,9 @@ public class Player extends GameObjectRectangle{
 
     public void draw(Canvas canvas){
         canvas.drawBitmap(bitmap, (float) (positionX - width/2 - offsetWidth), (float) (positionY - height/2 - offsetHeight), null);
+    }
+
+    public void newGame() {
+        setPositionX(deviceWidth/2);
     }
 }

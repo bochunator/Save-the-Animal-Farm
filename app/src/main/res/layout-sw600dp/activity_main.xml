@@ -4,45 +4,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChooseAnimalActivity"
-    android:background="@color/bright_blue">
-
+    tools:context=".MainActivity"
+    android:background="@color/bright_blue"
+    android:id="@+id/constraintLayout">
 
     <ImageView
-        android:id="@+id/imageViewSquareNoDetailsOutline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@null"
-        android:clickable="true"
-        android:focusable="true"
-        app:layout_constraintBottom_toTopOf="@+id/imageViewChosenAnimal"
+        android:alpha=".1"
+        android:scaleX="2"
+        android:scaleY="2"
+        android:src="@drawable/menu_background"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
 
     <Button
-        android:id="@+id/btnBack"
+        android:id="@+id/btnStartGameActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Back"
+        android:text="Start game"
         android:fontFamily="@font/kenney_blocks"
-        app:layout_constraintBottom_toBottomOf="@+id/imageViewChosenAnimal"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/imageViewChosenAnimal"
-        app:layout_constraintTop_toTopOf="@+id/imageViewChosenAnimal" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgViewStartChooseAnimalActivity" />
 
     <ImageView
-        android:id="@+id/imageViewChosenAnimal"
+        android:id="@+id/imgViewStartChooseAnimalActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnBack"
+        android:scaleX="2"
+        android:scaleY="2"
+        app:layout_constraintBottom_toTopOf="@+id/btnStartGameActivity"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewSquareNoDetailsOutline"
+        app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

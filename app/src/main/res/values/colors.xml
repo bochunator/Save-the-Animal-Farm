@@ -11,4 +11,8 @@
     <color name="enemy">#BFFF00</color>
     <color name="brown">#964B00</color>
     <color name="bright_blue">#0096FF</color>
+    <color name="dark_gold">#EEBC1D </color>
+    <color name="platinum">#E5E4E2 </color>
+    <color name="warm_white">#FDF4DC</color>
+    <color name="cosmic_latte">#FFF8E7</color>
 </resources>

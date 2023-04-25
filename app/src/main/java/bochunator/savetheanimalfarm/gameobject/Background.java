@@ -11,9 +11,11 @@ public class Background extends GameObject{
     public Background(Context context, double deviceWidth, double deviceHeight) {
         super(0, 0, deviceWidth, deviceHeight);
         CreatorBitmapBackground creatorBitmapBackground = new CreatorBitmapBackground();
-        bitmap = creatorBitmapBackground.getCreatorRandomBitmapBackground(context, (int) deviceHeight);
-        if(deviceWidth < bitmap.getWidth()){
+        bitmap = creatorBitmapBackground.getCreatorRandomBitmapBackground(context, (int) (Math.max(deviceHeight, deviceWidth)));
+        if (deviceWidth < bitmap.getWidth()) {
             positionX = Math.random() * (deviceWidth - bitmap.getWidth());
+        }else if (deviceHeight < bitmap.getHeight()) {
+            positionY = Math.random() * (deviceHeight - bitmap.getHeight());
         }
     }
 

@@ -4,7 +4,7 @@ import android.graphics.Canvas;
 import android.view.SurfaceHolder;
 
 public class GameThread extends Thread{
-    public static final double MAX_UPS = 30.0;
+    public static final double MAX_UPS = 60.0;
     private static final double UPS_PERIOD = 1E+3/MAX_UPS;
     private final GameSurfaceView gameSurfaceView;
     private final SurfaceHolder surfaceHolder;
@@ -55,6 +55,7 @@ public class GameThread extends Thread{
             }catch (IllegalArgumentException e){
                 e.printStackTrace();
             }finally {
+                if(!running) break;
                 if(canvas != null){
                     try {
                         surfaceHolder.unlockCanvasAndPost(canvas);

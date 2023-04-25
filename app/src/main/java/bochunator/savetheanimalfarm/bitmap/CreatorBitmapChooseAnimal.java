@@ -6,14 +6,14 @@ import android.graphics.BitmapFactory;
 
 import bochunator.savetheanimalfarm.R;
 
-public class CreatorBitmapChooseAnimal{
+public class CreatorBitmapChooseAnimal extends BitmapFactoryOptions {
     private static final int NUMBER_OF_ROWS = 6;
     private static final int NUMBER_OF_COLUMNS = 5;
 
     private final Bitmap squareNoDetailsOutlineBitmap;
 
     public CreatorBitmapChooseAnimal(Context context) {
-        this.squareNoDetailsOutlineBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.square_no_details_outline);
+        this.squareNoDetailsOutlineBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.square_no_details_outline, bitmapFactoryOptions);
     }
 
     public Bitmap getSquareNoDetailsOutlineBitmap() {

@@ -21,7 +21,7 @@ public class CreatorBitmapAnimals extends BitmapFactoryOptions{
             case 8: return Bitmap.createBitmap(spriteSheetBitmap, 276, 0, 170, 169);
             case 9: return Bitmap.createBitmap(spriteSheetBitmap, 0, 170, 194, 136);
             case 10: return Bitmap.createBitmap(spriteSheetBitmap, 522, 714, 136, 142);
-            case 11: return Bitmap.createBitmap(spriteSheetBitmap, 366, 442, 154, 136);
+            case 11: return Bitmap.createBitmap(spriteSheetBitmap, 366, 442, 155, 136);
             case 12: return Bitmap.createBitmap(spriteSheetBitmap, 194, 170, 170, 136);
             case 13: return Bitmap.createBitmap(spriteSheetBitmap, 364, 169, 146, 136);
             case 14: return Bitmap.createBitmap(spriteSheetBitmap, 658, 607, 136, 153);
@@ -48,11 +48,11 @@ public class CreatorBitmapAnimals extends BitmapFactoryOptions{
         switch (id) {
             case 0: return 0;
             case 1: return 0;
-            case 2: return 9;
+            case 2: return 8;
             case 3: return 28;
             case 4: return 0;
             case 5: return 10;
-            case 6: return 21;
+            case 6: return 22;
             case 7: return 70;
             case 8: return 17;
             case 9: return 29;
@@ -71,7 +71,7 @@ public class CreatorBitmapAnimals extends BitmapFactoryOptions{
             case 22: return 19;
             case 23: return 0;
             case 24: return 28;
-            case 25: return 18;
+            case 25: return 17;
             case 26: return 0;
             case 27: return 0;
             case 28: return 0;
