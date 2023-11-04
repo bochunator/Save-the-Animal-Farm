@@ -13,14 +13,10 @@
         android:theme="@style/Theme.SaveTheAnimalFarm"
         tools:targetApi="31">
         <activity
-            android:name=".ChooseAnimalActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
+            android:name=".core.GameActivity"
+            android:exported="false" />
         <activity
-            android:name=".GameSurfaceActivity"
+            android:name=".ChooseAnimalActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

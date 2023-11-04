@@ -26,7 +26,6 @@ public class ChooseAnimalActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_animal);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         final int NUMBER_ANIMALS_IN_ROW = 5;
         final int NUMBER_ANIMALS_IN_COLUMN = 6;

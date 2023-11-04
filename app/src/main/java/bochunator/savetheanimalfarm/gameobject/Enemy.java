@@ -6,6 +6,7 @@ import static bochunator.savetheanimalfarm.bitmap.CreatorBitmapPlanets.ZOOM;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 
 import androidx.core.content.ContextCompat;
 
@@ -20,21 +21,23 @@ public class Enemy extends GameObjectRadius{
 
     private int iteratorFloatingExplosion = 0;
     private int updatesUntilChangeIteratorFloatingExplosion = 0;
+    private Paint paint;
 
     public Enemy(Context context, double deviceWidth, double deviceHeight, Bitmap bitmapPlanet, Bitmap [] fireballBitmap) {
         super(
                 Math.random()*(deviceWidth - deviceWidth / 6)+deviceWidth / 12,
-                -deviceWidth/12,
+                -deviceWidth/12 - Math.random()*deviceHeight,
                 deviceWidth,
                 deviceHeight,
-                deviceWidth/12,
-                ContextCompat.getColor(context, R.color.enemy)
+                deviceWidth/12
         );
         this.bitmapPlanet = bitmapPlanet;
         this.fireballBitmap = fireballBitmap;
         double SECONDS_TO_REACH_GROUND = 3;
         velocityVertical = deviceHeight / (MAX_UPS * SECONDS_TO_REACH_GROUND);
         updatesUntilNextSpawn = (int) (Math.random()*MAX_UPS);
+        paint = new Paint();
+        paint.setColor(ContextCompat.getColor(context, R.color.enemy));
     }
 
     public static boolean readyToSpawn() {
@@ -46,8 +49,9 @@ public class Enemy extends GameObjectRadius{
     }
 
     public void draw(Canvas canvas){
-        canvas.drawBitmap(fireballBitmap[iteratorFloatingExplosion], (float) (positionX - radius), (float) (positionY - 6 * radius), null);
-        canvas.drawBitmap(bitmapPlanet, (float) (positionX - radius * ZOOM), (float) (positionY - radius * ZOOM), null);
+        //canvas.drawBitmap(fireballBitmap[iteratorFloatingExplosion], (float) (positionX - radius), (float) (positionY - 6 * radius), null);
+        //canvas.drawBitmap(bitmapPlanet, (float) (positionX - radius * ZOOM), (float) (positionY - radius * ZOOM), null);
+        canvas.drawCircle((float) positionX, (float) positionY, (float) (deviceWidth/12), paint);
     }
 
     public void update() {
@@ -72,5 +76,9 @@ public class Enemy extends GameObjectRadius{
                 iteratorFloatingExplosion = 0;
             }
         }
+    }
+    public void goToSky() {
+        setPositionX(Math.random()*(deviceWidth - deviceWidth / 6)+deviceWidth / 12);
+        setPositionY(-deviceWidth/12 - Math.random()*deviceHeight);
     }
 }

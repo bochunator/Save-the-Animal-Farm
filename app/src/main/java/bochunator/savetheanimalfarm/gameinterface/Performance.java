@@ -13,6 +13,7 @@ public class Performance {
     private final GameThread gameThread;
     private final Paint paintUpdatesAndFramesPerSecond;
     private final float textSize;
+    private String text;
 
     public Performance(Context context, GameThread gameThread, double deviceWidth) {
         this.gameThread = gameThread;
@@ -22,9 +23,14 @@ public class Performance {
         paintUpdatesAndFramesPerSecond.setTextSize(textSize);
     }
 
+    public void setText(String text) {
+        this.text = text;
+    }
+
     public void draw(Canvas canvas){
         drawUPS(canvas);
         drawFPS(canvas);
+        drawText(canvas);
     }
 
     public void drawUPS(Canvas canvas){
@@ -35,5 +41,8 @@ public class Performance {
     public void drawFPS(Canvas canvas){
         String averageFPS = Integer.toString(Math.round((float) gameThread.getAverageFPS()));
         canvas.drawText("FPS: " + averageFPS, textSize / 5, textSize * 5, paintUpdatesAndFramesPerSecond);
+    }
+    public void drawText(Canvas canvas) {
+        canvas.drawText("value: " + text, textSize / 5, textSize * 6, paintUpdatesAndFramesPerSecond);
     }
 }

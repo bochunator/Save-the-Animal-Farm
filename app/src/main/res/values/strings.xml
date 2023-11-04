@@ -1,3 +1,36 @@
 <resources>
     <string name="app_name">Save the Animal Farm</string>
+    <string name="start_game">Start game</string>
+    <string name="shared_preferences">shared_preferences</string>
+    <string name="saved_animal">saved_animal</string>
+    <string name="zebra">zebra</string>
+    <string name="rabbit">rabbit</string>
+    <string name="narwhal">narwhal</string>
+    <string name="goat">goat</string>
+    <string name="crocodile">crocodile</string>
+    <string name="whale">whale</string>
+    <string name="pig">pig</string>
+    <string name="moose">moose</string>
+    <string name="giraffe">giraffe</string>
+    <string name="cow">cow</string>
+    <string name="walrus">walrus</string>
+    <string name="penguin">penguin</string>
+    <string name="bear">bear</string>
+    <string name="frog">frog</string>
+    <string name="chicken">chicken</string>
+    <string name="snake">snake</string>
+    <string name="horse">horse</string>
+    <string name="elephant">elephant</string>
+    <string name="chick">chick</string>
+    <string name="sloth">sloth</string>
+    <string name="panda">panda</string>
+    <string name="hippo">hippo</string>
+    <string name="duck">duck</string>
+    <string name="buffalo">buffalo</string>
+    <string name="rhino">rhino</string>
+    <string name="owl">owl</string>
+    <string name="gorilla">gorilla</string>
+    <string name="dog">dog</string>
+    <string name="monkey">monkey</string>
+    <string name="parrot">parrot</string>
 </resources>
