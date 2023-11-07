@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/bright_blue"
     android:keepScreenOn="true"
-    tools:context=".MainActivity">
+    tools:context=".main.MainActivity">
     <!-- TODO remember to delete android:keepScreenOn -->
 
     <ImageView

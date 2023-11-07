@@ -1,6 +1,6 @@
 package bochunator.savetheanimalfarm.gameinterface;
 
-import static bochunator.savetheanimalfarm.MainActivity.HIGHEST_POINTS;
+import static bochunator.savetheanimalfarm.main.MainActivity.HIGHEST_POINTS;
 
 import android.content.Context;
 import android.content.SharedPreferences;

@@ -1,10 +1,8 @@
-package bochunator.savetheanimalfarm.core;
+package bochunator.savetheanimalfarm.main;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import bochunator.savetheanimalfarm.GameSurfaceView;
 
 public class GameActivity extends AppCompatActivity {
     @Override

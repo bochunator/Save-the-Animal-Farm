@@ -4,22 +4,18 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
-import bochunator.savetheanimalfarm.bitmap.CreatorBitmapBackground;
+import androidx.annotation.NonNull;
 
-public class Background extends GameObject{
-    private final Bitmap bitmap;
-    public Background(Context context, double deviceWidth, double deviceHeight) {
-        super(0, 0, deviceWidth, deviceHeight);
-        CreatorBitmapBackground creatorBitmapBackground = new CreatorBitmapBackground();
-        bitmap = creatorBitmapBackground.getCreatorRandomBitmapBackground(context, (int) (Math.max(deviceHeight, deviceWidth)));
-        if (deviceWidth < bitmap.getWidth()) {
-            positionX = Math.random() * (deviceWidth - bitmap.getWidth());
-        }else if (deviceHeight < bitmap.getHeight()) {
-            positionY = Math.random() * (deviceHeight - bitmap.getHeight());
-        }
+import bochunator.savetheanimalfarm.asset.BackgroundAsset;
+import bochunator.savetheanimalfarm.bitmap.BackgroundBitmap;
+
+public class Background extends Entity{
+    private Bitmap bitmap;
+    public Background(Context context) {
+        BackgroundBitmap backgroundBitmap = new BackgroundBitmap();
+        bitmap = backgroundBitmap.createBitmap(BackgroundAsset.BACKGROUND_EMPTY, context);
     }
-
-    public void draw(Canvas canvas) {
-        canvas.drawBitmap(bitmap, (float) getPositionX(), (float) getPositionY(), null);
+    public void draw(@NonNull Canvas canvas) {
+        canvas.drawBitmap(bitmap, getX(), getY(), null);
     }
 }

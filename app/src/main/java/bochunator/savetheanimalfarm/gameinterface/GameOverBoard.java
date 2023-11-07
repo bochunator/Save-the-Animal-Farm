@@ -9,7 +9,7 @@ import android.graphics.Rect;
 
 import androidx.core.content.ContextCompat;
 
-import bochunator.savetheanimalfarm.MainActivity;
+import bochunator.savetheanimalfarm.main.MainActivity;
 import bochunator.savetheanimalfarm.R;
 
 public class GameOverBoard {

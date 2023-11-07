@@ -1,16 +1,17 @@
 package bochunator.savetheanimalfarm;
 
 import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.view.SurfaceHolder;
 
 public class GameThread extends Thread {
     public static final double MAX_UPS = 70.0;
     private static final double UPS_PERIOD = 1000/MAX_UPS;
-    private final GameSurfaceView gameSurfaceView;
+    private final OldGameSurfaceView gameSurfaceView;
     private boolean running;
     private double averageUPS;
     private double averageFPS;
-    public GameThread(GameSurfaceView gameSurfaceView) {
+    public GameThread(OldGameSurfaceView gameSurfaceView) {
         this.gameSurfaceView = gameSurfaceView;
     }
     public double getAverageUPS() {
@@ -33,30 +34,32 @@ public class GameThread extends Thread {
         long sleepTime;
         Canvas canvas;
         startTime = System.currentTimeMillis();
+        int x = gameSurfaceView.getDisplayMetrics().widthPixels;
+        int y = gameSurfaceView.getDisplayMetrics().heightPixels;
+        Rect rect = new Rect(0,0,x,y);
         while (running){
             canvas = null;
-            try {
+            //try {
                 canvas = surfaceHolder.lockCanvas();
                 synchronized (surfaceHolder){
                     gameSurfaceView.update();
                     updateCount++;
-                    gameSurfaceView.draw(canvas);
-                }
-            }catch (IllegalArgumentException e){
-                e.printStackTrace();
-            }finally {
+                    gameSurfaceView.draw(canvas);                }
+            //}catch (IllegalArgumentException e){
+            //    e.printStackTrace();
+            //}finally {
                 if(!running) break;
                 if(canvas != null){
-                    try {
+                    //try {
                         surfaceHolder.unlockCanvasAndPost(canvas);
                         frameCount++;
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
+                    //}catch (Exception e){
+                    //    e.printStackTrace();
+                    //}
                 }
-            }
+            //}
             elapsedTime = System.currentTimeMillis() - startTime;
-            sleepTime = (long)(updateCount * UPS_PERIOD - elapsedTime);
+            sleepTime = (long)(updateCount * UPS_PERIOD - elapsedTime);             // może lepiej by było zamienić = na +=
             if(sleepTime > 0){
                 try {
                     sleep(sleepTime);
@@ -68,7 +71,7 @@ public class GameThread extends Thread {
                 gameSurfaceView.update();
                 updateCount++;
                 elapsedTime = System.currentTimeMillis() - startTime;
-                sleepTime = (long) (updateCount * UPS_PERIOD - elapsedTime);
+                sleepTime = (long) (updateCount * UPS_PERIOD - elapsedTime);        // dla sleepTime = 10
             }
             elapsedTime = System.currentTimeMillis() - startTime;
             if(elapsedTime >= 1000){
@@ -76,7 +79,7 @@ public class GameThread extends Thread {
                 averageFPS = frameCount / (1E-3 * elapsedTime);
                 updateCount = 0;
                 frameCount = 0;
-                startTime = System.currentTimeMillis();
+                startTime = System.currentTimeMillis();                             // += 1000 -> dla np 1005 tracimy 5 ms
             }
         }
     }

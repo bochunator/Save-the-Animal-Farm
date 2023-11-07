@@ -1,4 +1,4 @@
-package bochunator.savetheanimalfarm;
+package bochunator.savetheanimalfarm.main;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,7 +11,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.android.material.snackbar.Snackbar;
 
-import bochunator.savetheanimalfarm.core.GameActivity;
+import bochunator.savetheanimalfarm.ChooseAnimalActivity;
+import bochunator.savetheanimalfarm.R;
 import bochunator.savetheanimalfarm.object.Animal;
 import bochunator.savetheanimalfarm.object.AnimalName;
 import bochunator.savetheanimalfarm.utilities.Save;

@@ -1,8 +1,8 @@
 package bochunator.savetheanimalfarm;
 
-import static bochunator.savetheanimalfarm.MainActivity.ANIMAL;
-import static bochunator.savetheanimalfarm.MainActivity.DEFAULT_ANIMAL;
-import static bochunator.savetheanimalfarm.MainActivity.SHARED_PREFERENCES;
+import static bochunator.savetheanimalfarm.main.MainActivity.ANIMAL;
+import static bochunator.savetheanimalfarm.main.MainActivity.DEFAULT_ANIMAL;
+import static bochunator.savetheanimalfarm.main.MainActivity.SHARED_PREFERENCES;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,11 +13,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 
 import bochunator.savetheanimalfarm.bitmap.CreatorBitmapChooseAnimal;
+import bochunator.savetheanimalfarm.main.MainActivity;
 
 public class ChooseAnimalActivity extends AppCompatActivity {
 

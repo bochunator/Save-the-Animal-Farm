@@ -2,14 +2,16 @@ package bochunator.savetheanimalfarm;
 
 import static android.graphics.ImageFormat.RGB_565;
 
-import static bochunator.savetheanimalfarm.MainActivity.ANIMAL;
-import static bochunator.savetheanimalfarm.MainActivity.DEFAULT_ANIMAL;
-import static bochunator.savetheanimalfarm.MainActivity.SHARED_PREFERENCES;
-import static bochunator.savetheanimalfarm.MainActivity.SHOW_FPS;
+import static bochunator.savetheanimalfarm.main.MainActivity.ANIMAL;
+import static bochunator.savetheanimalfarm.main.MainActivity.DEFAULT_ANIMAL;
+import static bochunator.savetheanimalfarm.main.MainActivity.SHARED_PREFERENCES;
+import static bochunator.savetheanimalfarm.main.MainActivity.SHOW_FPS;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -28,16 +30,16 @@ import bochunator.savetheanimalfarm.bitmap.CreatorBitmapPlanets;
 import bochunator.savetheanimalfarm.gameinterface.Coins;
 import bochunator.savetheanimalfarm.gameinterface.GameOver;
 import bochunator.savetheanimalfarm.gameinterface.Health;
-import bochunator.savetheanimalfarm.gameinterface.Performance;
 import bochunator.savetheanimalfarm.gameobject.AdvancedCalculations;
-import bochunator.savetheanimalfarm.gameobject.Background;
+import bochunator.savetheanimalfarm.gameobject.OldBackground;
 import bochunator.savetheanimalfarm.gameobject.Enemy;
 import bochunator.savetheanimalfarm.gameobject.Ground;
 import bochunator.savetheanimalfarm.gameobject.Player;
+import bochunator.savetheanimalfarm.utilities.DeviceMetrics;
 
-public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callback{
+public class OldGameSurfaceView extends SurfaceView implements SurfaceHolder.Callback{
     private GameThread gameThread;
-    private Background background;
+    private OldBackground background;
     private Ground ground;
     private final Player player;
     private final List<Enemy> enemies;
@@ -48,11 +50,15 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     private final Health health;
     private final Coins coins;
     private final GameOver gameOver;
-    private Performance performance;
     private final boolean showPerformance;
     private final DisplayMetrics displayMetrics;
+
+    public DisplayMetrics getDisplayMetrics() {
+        return displayMetrics;
+    }
+
     private SurfaceHolder holder;
-    public GameSurfaceView(Context context) {
+    public OldGameSurfaceView(Context context) {
         super(context);
         Log.d("GameSurfaceView.java", "GameSurfaceView");
         setFocusable(true);
@@ -66,7 +72,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         displayMetrics = new DisplayMetrics();
         windowManager.getDefaultDisplay().getMetrics(displayMetrics);
-        background = new Background(getContext(), displayMetrics.widthPixels, displayMetrics.heightPixels);
+        background = new OldBackground(getContext(), displayMetrics.widthPixels, displayMetrics.heightPixels);
         ground = new Ground(getContext(), displayMetrics.widthPixels, displayMetrics.heightPixels);
         creatorBitmapPlanets = new CreatorBitmapPlanets(getContext(), displayMetrics.widthPixels);
         creatorBimapFireBall = new CreatorBimapFireBall(getContext(), displayMetrics.widthPixels);
@@ -79,6 +85,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         for(int i = 0; i < 20; i++) {
             enemies.add(new Enemy(getContext(), displayMetrics.widthPixels, displayMetrics.heightPixels, creatorBitmapPlanets.getCreatorRandomBitmapPlanets(), creatorBimapFireBall.getFireballBitmap()));
         }
+        DeviceMetrics.init(getContext());
     }
     @Override
     public void surfaceCreated(@NonNull SurfaceHolder surfaceHolder) {
@@ -86,8 +93,6 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         gameThread = new GameThread(this);
         gameThread.setRunning(true);
         gameThread.start();
-        performance = new Performance(getContext(), gameThread, displayMetrics.widthPixels);
-        performance.setText("Obiekty sa " + (holder == surfaceHolder));
     }
     @Override
     public void surfaceChanged(@NonNull SurfaceHolder surfaceHolder, int i, int i1, int i2) {
@@ -110,7 +115,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-//        background.draw(canvas);
+        background.draw(canvas);
 //        ground.draw(canvas);
         player.draw(canvas);
         for(Enemy e : enemies){
@@ -122,8 +127,12 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 //        health.draw(canvas);
 //        coins.draw(canvas);
         if (showPerformance) {
-            performance.draw(canvas);
+            //performance.draw(canvas);
         }
+        Paint paint = new Paint();
+        paint.setTextSize(50);
+        paint.setColor(Color.BLACK);
+        canvas.drawText(String.valueOf(DeviceMetrics.getHeight()), 50, 50, paint);
 //        if (health.isGameOver()){
 //            gameOver.drawGameOver(canvas);
 //        }
