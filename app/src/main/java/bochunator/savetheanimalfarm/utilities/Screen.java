@@ -14,15 +14,18 @@ public enum Screen {
     private int previousHeight;
     private int height;
     private float refreshRate;
+    public void init(@NonNull Context context) {
+        if (0 == width || 0 == height) {
+            update(context);
+        }
+    }
     public Screen update(@NonNull Context context) {
         WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         if (windowManager != null) {
             DisplayMetrics displayMetrics = new DisplayMetrics();
             Display display = windowManager.getDefaultDisplay();
             display.getMetrics(displayMetrics);
-            previousWidth = width;
             width = displayMetrics.widthPixels;
-            previousHeight = height;
             height = displayMetrics.heightPixels;
             refreshRate = display.getRefreshRate();
         }
@@ -39,5 +42,9 @@ public enum Screen {
     }
     public boolean isSizeChanged() {
         return previousWidth != width || previousHeight != height;
+    }
+    public void bitmapSizesUpdated() {
+        previousWidth = width;
+        previousHeight = height;
     }
 }

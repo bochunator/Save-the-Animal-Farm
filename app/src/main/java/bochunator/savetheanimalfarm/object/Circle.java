@@ -8,7 +8,4 @@ public class Circle extends Entity {
     public float getDiameter() {
         return diameter;
     }
-    public void setDiameter(float diameter) {
-        this.diameter = diameter;
-    }
 }

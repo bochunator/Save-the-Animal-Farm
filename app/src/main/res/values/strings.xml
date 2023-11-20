@@ -9,6 +9,8 @@
     <string name="saved_player">saved_player</string>
     <string name="highest_points">highest_points</string>
     <string name="latest_points">latest_points</string>
+    <string name="start_background_activity">start_background_activity</string>
+    <string name="saved_background">saved_background</string>
     <string name="zebra">zebra</string>
     <string name="rabbit">rabbit</string>
     <string name="narwhal">narwhal</string>
@@ -39,4 +41,5 @@
     <string name="dog">dog</string>
     <string name="monkey">monkey</string>
     <string name="parrot">parrot</string>
+    <string name="loading">loading</string>
 </resources>

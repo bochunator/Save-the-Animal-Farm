@@ -4,66 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bright_blue"
-    android:keepScreenOn="true"
-    tools:context=".main.MainActivity">
-    <!-- TODO remember to delete android:keepScreenOn -->
+    tools:context=".activity.MainActivity">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:alpha=".1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/menu_background"
-        tools:src="@tools:sample/avatars" />
-
-    <Button
-        android:id="@+id/mainActivityBtnStartGameActivity"
+    <TextView
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/kenney_blocks"
-        android:text="@string/start_game"
+        android:text="@string/loading"
+        android:textColor="@color/dark_gold"
+        android:textSize="34sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/mainActivityGuideline" />
 
-    <ImageView
-        android:id="@+id/mainActivityIvPlayer"
+    <TextView
+        android:id="@+id/mainActivityTvDots"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/mainActivityGuideline2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
-
-    <ImageView
-        android:id="@+id/mainActivityIvLeft"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/mainActivityBtnStartGameActivity"
-        app:layout_constraintEnd_toStartOf="@+id/mainActivityBtnStartGameActivity"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/left_element_yellow_diamond_glossy"
-        tools:srcCompat="@tools:sample/avatars" />
-
-    <ImageView
-        android:id="@+id/mainActivityIvRight"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/mainActivityBtnStartGameActivity"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/mainActivityBtnStartGameActivity"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/right_element_yellow_diamond_glossy"
-        tools:srcCompat="@tools:sample/avatars" />
+        android:fontFamily="@font/kenney_blocks"
+        android:textColor="@color/dark_gold"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintTop_toTopOf="@+id/mainActivityGuideline" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/mainActivityGuideline"
@@ -71,12 +36,5 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.5" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/mainActivityGuideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.66" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

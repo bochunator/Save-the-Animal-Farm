@@ -23,6 +23,9 @@ public enum Background implements BitmapConfigurator {
         );
         return INSTANCE;
     }
+    public Bitmap getBitmap() {
+        return bitmap;
+    }
     public void render(@NonNull Canvas canvas) {
         canvas.drawBitmap(bitmap, 0, 0, null);
     }

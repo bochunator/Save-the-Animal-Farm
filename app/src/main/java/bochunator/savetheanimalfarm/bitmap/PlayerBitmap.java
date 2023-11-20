@@ -29,6 +29,9 @@ public enum PlayerBitmap implements BitmapConfigurator {
         offsetHeight = playerAsset.getOffsetHeight() * height / playerAsset.getCollisionHeight();
         return INSTANCE;
     }
+    public Bitmap getBitmap() {
+        return bitmap;
+    }
     public void render(@NonNull Canvas canvas, float x, float y) {
         canvas.drawBitmap(bitmap, x - offsetWidth, y - offsetHeight, null);
     }

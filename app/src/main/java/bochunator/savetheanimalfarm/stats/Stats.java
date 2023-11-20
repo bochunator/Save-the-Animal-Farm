@@ -3,16 +3,11 @@ package bochunator.savetheanimalfarm.stats;
 import android.content.Context;
 import android.graphics.Canvas;
 
-import bochunator.savetheanimalfarm.utilities.Screen;
-
 public class Stats {
-    private Hearts hearts;
-    private Coins coins;
+    private final Hearts hearts;
+    private final Coins coins;
     public Stats(Context context) {
         hearts = Hearts.INSTANCE;
-        if (Screen.INSTANCE.isSizeChanged()) {
-            hearts = Hearts.INSTANCE.update(context);
-        }
         hearts.setHealthPoints(3);
         coins = Coins.INSTANCE.update(context);
     }

@@ -31,6 +31,9 @@ public enum Hearts implements BitmapConfigurator {
         );
         return INSTANCE;
     }
+    public Bitmap getBitmap() {
+        return bitmap;
+    }
     public void render(@NonNull Canvas canvas) {
         for (int i = healthPoints; i > 0; i--) {
             canvas.drawBitmap(

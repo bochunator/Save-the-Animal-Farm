@@ -14,5 +14,6 @@
         <!-- Customize your theme here. -->
         <item name="android:windowFullscreen">true</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:windowBackground">@drawable/home_screen_background</item>
     </style>
 </resources>

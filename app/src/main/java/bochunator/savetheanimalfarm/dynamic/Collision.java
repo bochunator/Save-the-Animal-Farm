@@ -6,8 +6,8 @@ import android.content.Intent;
 
 import androidx.annotation.NonNull;
 
-import bochunator.savetheanimalfarm.main.GameOverActivity;
-import bochunator.savetheanimalfarm.main.GameThread;
+import bochunator.savetheanimalfarm.activity.GameOverActivity;
+import bochunator.savetheanimalfarm.manager.GameThread;
 import bochunator.savetheanimalfarm.object.Circle;
 import bochunator.savetheanimalfarm.object.Rectangle;
 import bochunator.savetheanimalfarm.stats.Coins;

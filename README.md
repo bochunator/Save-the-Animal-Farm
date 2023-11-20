@@ -1,31 +1,26 @@
 # Save the Animal Farm
 
-My main purpose was to make a simple game.
+My main purpose was to learn android environment, because I wanted to show my programming skills to people who would ask about my interests.
 
-I have based on Sandip Bhattacharya video, here is link:
+### Why java?
 
-https://www.youtube.com/watch?v=gfX8UHTpq3o&t=2095s
+I've chosen Java because it was easier to learn when I had done some C++ programs.
 
-I changed view to surfaceview to separate frames drawing from logic to two threads. I added more available pets, colorfull planets instead of spikes, new grounds, backgrounds. Character de facto teleporting to place where you tap instead moving with specific velocity.
+I heard about java when I was a kid, so it also had an impact on my decision. Java is used not only in mobile applications, so I've chosen java.
 
-Finally I uploaded on google play, so you can simple download:
+### What have I learned?
+
+- How game loops work, I've found they are similar to plc controllers and microcontrollers as arduino.
+- Activities-lifecycle concept in android.
+- SurfaceView which purpose is to provide a surface in which a secondary thread can render into the screen.
+- Why Garbage collector should not be used in game loop.
+- Understood the game publishing process on the Google Play Store, including requirements for icons, descriptions, promotional graphics, etc.
+
+### What I would change, if I had to do new game
+
+- Use vulkan for rendering, due to its multithreading advantages.
+- Change programming language to C++.
+
+### Google Play
 
 https://play.google.com/store/apps/details?id=bochunator.savetheanimalfarm
-
-## ic_launcher-playstore:
-
-![alt text](https://i.ibb.co/d4tVdTJ/ic-launcher-playstore.png)
-
-## graphic:
-
-![alt text](https://i.ibb.co/4KDnFV3/graphic.png)
-
-## phone screenshots:
-![alt text](https://i.ibb.co/wJW0k9b/Screenshot-20230421-122757.png)
-![alt text](https://i.ibb.co/Qv3WjJz/Screenshot-20230421-122816.png)
-![alt text](https://i.ibb.co/XJVNbLh/Screenshot-20230421-122831.png)
-![alt text](https://i.ibb.co/3vsRNPr/Screenshot-20230421-123028.png)
-![alt text](https://i.ibb.co/RcXW6g0/Screenshot-20230421-123127.png)
-![alt text](https://i.ibb.co/YLJvC7X/Screenshot-20230421-123528.png)
-![alt text](https://i.ibb.co/LzRFZXr/Screenshot-20230421-123702.png)
-![alt text](https://i.ibb.co/HnK2gWf/Screenshot-20230421-123754.png)

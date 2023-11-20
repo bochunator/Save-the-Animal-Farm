@@ -25,6 +25,9 @@ public enum Ground implements BitmapConfigurator {
         y = 0.86f * Screen.INSTANCE.getHeight();
         return INSTANCE;
     }
+    public Bitmap getBitmap() {
+        return bitmap;
+    }
     public void render(@NonNull Canvas canvas) {
         canvas.drawBitmap(bitmap, 0, y, null);
     }

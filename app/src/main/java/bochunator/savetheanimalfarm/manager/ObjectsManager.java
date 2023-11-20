@@ -1,4 +1,4 @@
-package bochunator.savetheanimalfarm.main;
+package bochunator.savetheanimalfarm.manager;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -25,13 +25,8 @@ public class ObjectsManager {
         stats.render(canvas);
     }
     public void onTouchEvent(@NonNull MotionEvent event) {
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN: {
-                //
-            } break;
-            case MotionEvent.ACTION_MOVE: {
-                dynamic.getPlayer().setX(event.getX());
-            } break;
+        if (MotionEvent.ACTION_MOVE == event.getAction()) {
+            dynamic.getPlayer().setX(event.getX());
         }
     }
 }

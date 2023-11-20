@@ -1,30 +1,28 @@
 package bochunator.savetheanimalfarm.dynamic;
 
-import android.content.Context;
 import android.graphics.Canvas;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import bochunator.savetheanimalfarm.bitmap.EnemyBitmap;
+import bochunator.savetheanimalfarm.bitmap.Fire;
 import bochunator.savetheanimalfarm.utilities.Screen;
 
 public class EnemyManager {
     private final List<Enemy> enemies;
-    private EnemyBitmap enemyBitmap;
+    private final EnemyBitmap enemyBitmap;
+    private final Fire fire;
     private int updatesUntilNextSpawn;
     private final float diameter;
-    public EnemyManager(Context context) {
+    public EnemyManager() {
         diameter = Screen.INSTANCE.getWidth() / 6f;
         enemies = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            //enemies.add(Enemy.createRandomEnemy(diameter));
             enemies.add(new Enemy(diameter));
         }
         enemyBitmap = EnemyBitmap.INSTANCE;
-        if (Screen.INSTANCE.isSizeChanged()) {
-            enemyBitmap = EnemyBitmap.INSTANCE.update((int) diameter, context);
-        }
+        fire = Fire.INSTANCE;
     }
     public List<Enemy> getEnemies() {
         return enemies;
@@ -40,6 +38,7 @@ public class EnemyManager {
         for (Enemy e : enemies) {
             if (e.isActive()) {
                 e.update(timeMultiplier);
+                fire.render(e.getFireAsset(), e.getNextFireBitmapCounter(), (int) e.getX(), (int) e.getY(), canvas);
                 enemyBitmap.render(canvas, e.getEnemyAsset(), e.getX() - diameter/2, e.getY() - diameter/2);
             }
         }

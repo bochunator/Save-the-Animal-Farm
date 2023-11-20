@@ -44,7 +44,6 @@ public enum Coins {
     public void gain() {
         points+=10;
     }
-
     public void save() {
         if(points > highestPoints){
             DataManager.INSTANCE.setInt(highest_points_key, points);
