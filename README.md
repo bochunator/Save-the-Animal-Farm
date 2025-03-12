@@ -1,19 +1,24 @@
 # Save the Animal Farm
+The goal of the game is to avoid falling planets.
+## Screenshots
+| ![Screenshot 1](https://i.ibb.co/8JrZGyP/Screenshot-2025-03-12-12-04-35-33-6ad820cdb77aa83569c95beeb001a1dd.jpg) | ![Screenshot 2](https://i.ibb.co/PsvFbMkS/Screenshot-2025-03-12-12-04-50-66-6ad820cdb77aa83569c95beeb001a1dd.jpg) | ![Screenshot 3](https://i.ibb.co/4ZgSg2zY/Screenshot-2025-03-12-12-04-44-92-6ad820cdb77aa83569c95beeb001a1dd.jpg) | ![Screenshot 4](https://i.ibb.co/whBksCVH/Screenshot-2025-03-12-12-05-37-22-6ad820cdb77aa83569c95beeb001a1dd.jpg) |
+|---|---|---|---|
+
 
 ## Download
 
-#### Google Play
-
-You can view screenshots of the game on Google Play:
-
-https://play.google.com/store/apps/details?id=bochunator.savetheanimalfarm
-
-#### Newer version
+#### Newest version
 
 The latest version is not available on Google Play due to recent changes in their policy. You can
 download the updated version with new backgrounds and improved animations, from GitHub:
 
 https://github.com/bochunator/Save-the-Animal-Farm/releases/download/2.0/app-release.apk
+
+#### ~~Google Play~~
+
+The game is no longer available due to Google's policy.
+
+~~https://play.google.com/store/apps/details?id=bochunator.savetheanimalfarm~~
 
 ## About project
 
