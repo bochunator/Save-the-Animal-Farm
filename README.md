@@ -12,7 +12,7 @@ The goal of the game is to avoid falling planets.
 The latest version is not available on Google Play due to recent changes in their policy. You can
 download the updated version with new backgrounds and improved animations, from GitHub:
 
-https://github.com/bochunator/Save-the-Animal-Farm/releases/download/2.0/app-release.apk
+https://github.com/bochunator/Save-the-Animal-Farm/releases/download/3.0/app-release.apk
 
 #### ~~Google Play~~
 
