@@ -10,6 +10,7 @@ import bochunator.savetheanimalfarm.R;
 import bochunator.savetheanimalfarm.asset.PlayerAsset;
 import bochunator.savetheanimalfarm.bitmap.PlayerBitmap;
 import bochunator.savetheanimalfarm.utilities.DataManager;
+import bochunator.savetheanimalfarm.utilities.Screen;
 
 public class AnimalActivity extends AppCompatActivity {
     private ImageView animalActivityIvPlayer;
@@ -45,5 +46,7 @@ public class AnimalActivity extends AppCompatActivity {
     private void setAndSaveImageView() {
         animalActivityIvPlayer.setImageBitmap(PlayerBitmap.getBitmap(playerAsset, AnimalActivity.this));
         DataManager.INSTANCE.setEnum(getString(R.string.saved_player), playerAsset);
+        int width = Screen.INSTANCE.getWidth();
+        PlayerBitmap.INSTANCE.update(playerAsset, width/7, width/7, this);
     }
 }

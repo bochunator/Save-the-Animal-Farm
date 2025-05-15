@@ -20,8 +20,11 @@ import bochunator.savetheanimalfarm.utilities.DataManager;
 import bochunator.savetheanimalfarm.utilities.Screen;
 
 public class MainActivity extends AppCompatActivity {
+
     private TextView mainActivityTvDots;
     private int dotsCount = 0;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

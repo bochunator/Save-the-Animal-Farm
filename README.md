@@ -1,8 +1,8 @@
 # Save the Animal Farm
 The goal of the game is to avoid falling planets.
 ## Screenshots
-| ![Screenshot 1](https://i.ibb.co/8JrZGyP/Screenshot-2025-03-12-12-04-35-33-6ad820cdb77aa83569c95beeb001a1dd.jpg) | ![Screenshot 2](https://i.ibb.co/PsvFbMkS/Screenshot-2025-03-12-12-04-50-66-6ad820cdb77aa83569c95beeb001a1dd.jpg) | ![Screenshot 3](https://i.ibb.co/4ZgSg2zY/Screenshot-2025-03-12-12-04-44-92-6ad820cdb77aa83569c95beeb001a1dd.jpg) | ![Screenshot 4](https://i.ibb.co/whBksCVH/Screenshot-2025-03-12-12-05-37-22-6ad820cdb77aa83569c95beeb001a1dd.jpg) |
-|---|---|---|---|
+| ![Screenshot 1](media/screenshot.jpg) | ![Screenshot 2](media/screenshot2.jpg) | ![Screenshot 3](media/screenshot3.jpg) | ![Screenshot 4](media/screenshot4.jpg) |
+|-------------------------------------|-------------------------------------|----------------------------------------|----------------------------------------|
 
 
 ## Download
